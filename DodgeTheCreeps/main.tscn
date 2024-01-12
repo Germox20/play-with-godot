@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://bmlwcxe804kya"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_gr005"]
+[ext_resource type="PackedScene" uid="uid://dkh5b6knjrvue" path="res://mob.tscn" id="2_sigkn"]
+[ext_resource type="PackedScene" uid="uid://boyoysh3dnr3k" path="res://player.tscn" id="3_st6mg"]
+[ext_resource type="PackedScene" uid="uid://bhtubxqwj4jhm" path="res://hud.tscn" id="4_xj5v3"]
+[ext_resource type="AudioStream" uid="uid://w4uiwi1hloag" path="res://art/House In a Forest Loop.ogg" id="5_os1t7"]
+[ext_resource type="AudioStream" uid="uid://cli1spqq0av4b" path="res://art/gameover.wav" id="6_twdxe"]
+[ext_resource type="Texture2D" uid="uid://53on6a10mvb6" path="res://art/Spot.png" id="7_iye1x"]
+
+[sub_resource type="Curve2D" id="Curve2D_yvdu2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8le30"]
+texture = ExtResource("7_iye1x")
+texture_region_size = Vector2i(200, 200)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_tgshf"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_8le30")
+
+[node name="Main" type="Node"]
+script = ExtResource("1_gr005")
+mob_scene = ExtResource("2_sigkn")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[node name="Player" parent="." instance=ExtResource("3_st6mg")]
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 450)
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_yvdu2")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+
+[node name="HUD" parent="." instance=ExtResource("4_xj5v3")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_os1t7")
+volume_db = -15.0
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_twdxe")
+volume_db = -10.0
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(0, 528)
+tile_set = SubResource("TileSet_tgshf")
+format = 2
+
+[connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
