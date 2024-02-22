@@ -1,5 +1,7 @@
 # Godot Engine Test Projects Repository
 
+*Disclaimer: I do not have any relationship with the creators of the Godot Engine, nor do I collaborate on the project. This repository is only meant for sharing the solutions I found to diverse game mechanics using the engine.*
+
 Welcome to our Godot Engine Test Projects repository! This repository is dedicated to hosting a variety of projects developed using the Godot game development engine. Our goal is to showcase the capabilities of Godot, provide practical examples of game development techniques, and foster a community of learning and collaboration among Godot developers.
 
 ## Projects Included
@@ -23,7 +25,7 @@ To run these projects, you'll need to have Godot Engine installed on your comput
 
 ## Contributing
 
-We welcome contributions from the community! Whether you're interested in adding a new project, improving existing ones, or fixing bugs, your help is much appreciated. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this repository.
+Contributing to these projects will be available later on, once all the appropiate settings and measures are applied.
 
 ## License
 
