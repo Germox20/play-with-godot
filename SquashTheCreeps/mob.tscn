@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dos3ojkj7jm3l"]
+[gd_scene load_steps=7 format=3 uid="uid://dos3ojkj7jm3l"]
 
 [ext_resource type="Script" path="res://mob.gd" id="1_3t6yd"]
 [ext_resource type="PackedScene" uid="uid://cqnbpyya8s0p1" path="res://art/mob.glb" id="1_lyyse"]
@@ -40,6 +40,10 @@ _data = {
 "float": SubResource("Animation_sv7ff")
 }
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_16k8j"]
+height = 0.5
+radius = 15.0
+
 [node name="Mob" type="CharacterBody3D" groups=["mob"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.325579, 0)
 collision_layer = 2
@@ -47,10 +51,9 @@ collision_mask = 0
 script = ExtResource("1_3t6yd")
 
 [node name="Pivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
 
 [node name="Character" parent="Pivot" instance=ExtResource("1_lyyse")]
-transform = Transform3D(1, 0, 0, 0, 0.998627, -0.0523856, 0, 0.0523856, 0.998627, 0, 0.61063, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99999, -0.00441435, 0, 0.00441435, 0.99999, 0, 0.227079, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -58,7 +61,6 @@ shape = SubResource("BoxShape3D_pbsyt")
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254956, 0.303828)
-visible = false
 aabb = AABB(-1.1986, -0.541229, -1.70998, 2.3972, 1.11175, 3.41997)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -66,5 +68,9 @@ libraries = {
 "": SubResource("AnimationLibrary_q18yb")
 }
 autoplay = "float"
+
+[node name="Sight" type="ShapeCast3D" parent="."]
+shape = SubResource("CylinderShape3D_16k8j")
+target_position = Vector3(0, 0, 0)
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]
